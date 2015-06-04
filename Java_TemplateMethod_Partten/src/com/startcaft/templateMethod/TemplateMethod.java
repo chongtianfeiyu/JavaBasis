@@ -29,7 +29,7 @@ abstract class GetTime{
 	public abstract void runCode();
 }
 
-
+//子类A
 class Subtime extends GetTime{
 	
 	//重写父类的不确定的部分，
@@ -42,6 +42,19 @@ class Subtime extends GetTime{
 	}
 }
 
+//子类B
+class ChilsTime extends GetTime{
+
+	@Override
+	public void runCode() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < 10000; i++) {
+			System.out.println(i);
+		}
+	}
+	
+}
+
 
 public class TemplateMethod {
 
@@ -50,6 +63,9 @@ public class TemplateMethod {
 		
 		Subtime gt = new Subtime();
 		gt.getTime();
+		
+		ChilsTime ct = new ChilsTime();
+		ct.getTime();
 	}
 
 }
