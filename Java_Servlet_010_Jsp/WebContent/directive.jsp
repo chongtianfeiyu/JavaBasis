@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSP指令(Directive)</title>
+</head>
+<body>
+	指令(Directive)是一种JSP句法元素，其指示JSP转换器应该如何将一个JSP页面转换成Servlet的命令。
+	指令有很多，但是最重要的是这两个:page和include。其他的指令还有taglib，tag，arrtibute及variable。
+	<p>
+		<strong>page指令</strong>
+		利用page指令可以就当前jsp页面的某些方面对jsp转换器提出指示，如可以告诉jsp转换器隐式对象put应该
+		使用多大容量的缓存区，要使用哪种MIME类型，要导入哪些Java类型等。
+		page指令的语法如下：
+		&lt;%@ page attribute1="value1" attribute2="value2" ... %&gt;
+		@符号和page之间的空格是可选的。下面是page指令的属性列表：
+	</p>
+	<ol>
+		<li>import。指定要导入的一种或多种Java类型。(java.lang，javax.servlet，javax.servlet.http.javaxservlet.jsp)这些类型都是隐式导入的。</li>
+		<li>session。值为true时，表示这个页面参与Session管理；值为false时，表示该页面不参与Session管理。默认值为true。</li>
+		<li>
+			bufer。指定隐式对象put的缓冲区大小，以千字节为单位。强制以kb作为后缀。默认容量大于或等于8kb,
+			具体去取决于容器。这个属性还可以为none，表示不使用缓存，这样会导致输出的内容直接被写入响应的PrintWriter。
+		</li>
+		<li>
+			autoFlush。默认值为true，表示当缓冲区满时，被缓存的输出应该自动刷新。值为false时，
+			表示只有在调用隐式对象response的flush方法时，才进行刷新缓冲区，因此，当缓冲区溢出时会抛出一个异常。
+		</li>
+		<li>
+			isThreadSafe。表示页面中实现的线程安全级别。建议不要使用这个属性。原因自己百度
+		</li>
+		<li>
+			info。指定所生成的Servlet的getServletInfo方法返回值。
+		</li>
+		<li>
+			errorPage。表示负责处理该页面可能出现的错误的页面。
+		</li>
+		<li>
+			isErrorPage。表明这个页面是否负责处理错误。
+		</li>
+		<li>
+			contentType。指定该页面隐式对象response的内容类型，其默认值为text/html。
+		</li>
+		<li>
+			pageEncoding。指定该页面的字符编码，其默认值为ISO-8859-1.
+		</li>
+		<li>
+			isEllgnored。表明是否忽略EL表达式。EL是Expression Language的缩写。后面讲解。
+		</li>
+		<li>
+			language。表明页面使用的脚本语言，其默认值为java，这是JSP2.2中唯一有效的值。
+		</li>
+		<li>
+			extends。指定这个JSP页面的实现类必须扩展的超类，该属性很少使用，使用时要特别小心。
+		</li>
+		<li>
+			deferredSyntaxAllowedAsLiteral。指明是否允许用字符序列&#35;&#123;作为该页面和编译单元的String字面值，
+			其默认值为false。&#35;&#123;很重要，因为它在EL中是一个特殊的字符序列。
+		</li>
+		<li>
+			trimDirectiveWhitespaces。表明是否从输出内容中删除只含空格的模板文本，其默认值为false，
+			也就是说，不删除空格。
+		</li>
+	</ol>
+	<p>
+		page指令可以出现在页面中的任何位置。只是当它包含contentType或pageEncoding属性时，它就必须放在所有的
+		模板数据之前，并且是在利用Java代码发送任何内容之前。<strong>这是因为，必须在发送任何内容之前设置内容类型和字符编码。</strong>
+		page指令也可以多次出现，但是，在多个page指令中多次出现的同一属性，它的值必须一致。【只有import属性列外】
+	</p>
+	<hr/>
+	<p>
+		<strong>include指令</strong>
+		利用include指令可以将另一个文件的内容包含到当前的JSP页面中。在一个JSP页面可以使用多个include指令。
+		include指令的语法如下：
+		&lt;%@ include file="url" %&gt;
+		ulr是表示一个include文件的相对路径，如果url以一个正斜线&#40;&#47;&#41;开头，那么其在服务器中
+		就会被解读成是一条绝对路径。如果不是以正斜线开头，则被解读为相对于当前JSP页面的路径。
+	</p>
+</body>
+</html>
