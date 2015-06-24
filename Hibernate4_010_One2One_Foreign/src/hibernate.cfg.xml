@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.password">5904395</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://127.0.0.1:1433;databaseName=Hibernate</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+    	
+        <!-- 是否输出SQL -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- 是否格式化SQL -->
+        <property name="hibernate.format_sql">true</property>    
+        <!-- 加载hibernate自动更新数据库结构，不会删除原有数据，最常使用 -->
+        <property name="hibernate.hbm2ddl.auto">update</property>  
+        <!-- 线程Session -->
+        <property name="current_session_context_class">thread</property>    
+        
+        <!-- 配置C3P0 -->
+        <property name="hibernate.c3p0.max_size">10</property>
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.idle_test_period">2000</property>
+        <property name="hibernate.c3p0.timeout">2000</property>
+        <property name="hibernate.c3p0.max_statements">10</property>
+        
+        <mapping resource="com/startcaft/model/Department.hbm.xml"/>
+        <mapping resource="com/startcaft/model/Manager.hbm.xml"/>
+        
+    </session-factory>
+</hibernate-configuration>

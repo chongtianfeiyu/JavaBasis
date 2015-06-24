@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.startcaft.model">
+    
+    <class name="Department" table="Tb_Department">
+        <id name="departId" type="java.lang.Integer">
+            <column name="DEPART_ID" />
+            <generator class="native" />
+        </id>
+        <property name="departName" type="java.lang.String">
+            <column name="DEPART_NAME" />
+        </property>
+        
+        <!-- 
+        	基于外键的1:1关联关系，在有外键引用的一方使用many-to-one来映射，
+        	并且要为外键使用一个唯一约束unique="true"
+        -->
+        <many-to-one name="manager" class="Manager">
+            <column name="manager_id" unique="true"></column>
+        </many-to-one>
+        
+    </class>
+</hibernate-mapping>
