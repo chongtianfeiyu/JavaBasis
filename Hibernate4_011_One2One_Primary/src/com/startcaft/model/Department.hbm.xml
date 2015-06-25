@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.startcaft.model">
+    
+    <class name="Department" table="Tb_Department">
+        <id name="departId" type="java.lang.Integer">
+            <column name="DEPART_ID" />
+            
+            <!-- 映射这个主键使用外键的方式产生 -->
+            <generator class="foreign">
+                <!-- 这个主键参照的持久化类的哪个属性 -->
+                <param name="property">manager</param>
+            </generator>
+        </id>
+        <property name="departName" type="java.lang.String">
+            <column name="DEPART_NAME" />
+        </property>
+        
+        <!-- constrained="true"为上面的主键添加外键约束 -->
+        <one-to-one name="manager" class="Manager" constrained="true"></one-to-one>
+    </class>
+</hibernate-mapping>
