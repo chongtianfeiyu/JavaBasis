@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.startcaft.model">
+    
+    <class name="Category" table="Tb_Category">
+        <id name="categoryId" type="java.lang.Integer">
+            <column name="CATEGORY_ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        
+        <!-- 
+        	table属性：指定中间表的名称。
+        	key->column元素 指定当前持久化类在中间表的外间列的名称。
+        	只要在任意一方指定inverse="true" 放弃维护关联关系
+        -->
+        <set name="items" table="Tb_Categore_item" inverse="true">
+            <key>
+                <column name="C_ID" />
+            </key>
+            <!-- 
+            	使用many-to-many 指定多对多的关系。 
+            	column属性 指定set集合中的持久化类在中间表的外间列的名称
+            -->
+            <many-to-many class="Item" column="I_ID"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
