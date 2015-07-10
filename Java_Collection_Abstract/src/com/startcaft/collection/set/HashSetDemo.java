@@ -19,7 +19,7 @@ import java.util.Iterator;
  * 		|----TreeSet
  * 
  */
-public class SetDemo {
+public class HashSetDemo {
 
 	public static void main(String[] agrs){
 		
