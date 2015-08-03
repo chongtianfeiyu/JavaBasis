@@ -1,0 +1,34 @@
+具体描述Spring：
+----轻量级：Spring是非侵入式的。在基于Spring的开发中，程序中的对象不依赖于Spring的API。
+----依赖注入（DI----dependency injection，IOC）
+----面向切面编程（AOP----aspect oriented programming）
+----容器：Spring是一个容器，因为它包含并且管理着应用程序中对象的声明周期
+----框架：Spring实现了使用简单的组件配置组成成一个复杂的应用，在Spring中可以使用XML和Annotation组成这些对象
+----一站式：在IOC和AOP的基础上整合各种企业应用中的开源框架和优秀的第三方类库(实际上Spring自身也提供了展示层 SpringMVC 和持久层的 Spring JDBC)
+
+
+Spring模块：
+DataAcess数据访问模块
+	----JDBC
+	----ORM
+	----OXM
+	----JMS
+	----Transaction
+
+Web模块
+	----WebScoket
+	----Servlet
+	----Web
+	----Protiel
+
+AOP
+Aspects
+Messaging消息模块
+Instrumentation整合模块
+
+Core Container容器模块
+	----Beans
+	----Core
+	----Context
+	----SpEL
+
