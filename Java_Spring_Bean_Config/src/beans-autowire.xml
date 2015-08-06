@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+    
+    <bean id="address" class="com.startcaft.spring.autowire.Address"
+        p:city="Guangdong" p:street="HuangShiRoad">
+    </bean>
+    <bean id="address2" class="com.startcaft.spring.autowire.Address"
+        p:city="Guangdong" p:street="HuangShiRoad">
+    </bean>
+    <bean id="car" class="com.startcaft.spring.autowire.Car"
+        p:brand="Honda" p:price="150000.00">
+    </bean>
+    
+    <!--  
+    	<bean id="person" class="com.startcaft.spring.autowire.Person"
+        	p:name="startcaft" p:age="33" p:address-ref="address" p:car-ref="car">
+    	</bean>
+    -->
+    
+    <!-- 
+    	可以使用 autowire 属性指定自动装配的方式:
+    	byName 根据Bean的名字和当前Bean的setter风格的属性名进行自动装配 ,若有匹配，则进行自动装配，若没有匹配的，则不匹配；
+    	byType 根据Bean的类型和当前Bean的属性的类型进行自动装配；byType自动装配要求Bean的类型必须唯一,否则抛出异常；
+    -->
+    <bean id="person" class="com.startcaft.spring.autowire.Person"
+        p:name="startcaft" p:age="33" autowire="byName">
+    </bean>
+
+</beans>

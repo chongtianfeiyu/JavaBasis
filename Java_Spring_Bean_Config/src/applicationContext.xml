@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 配置Bean： 
+		1，class属性：bean的全类名，通过反射的方式在IOC容器中创建Bean。【要求Bean中必须有无参的构造器】 
+		2，id属性：唯一标识，通过它来获取bean。 
+	-->
+	<!-- 
+		<bean id="myBean" class="com.startcaft.spring.beans.HelloWorld"> 
+			<property name="name" value="Spring"></property> 
+		</bean> 
+	-->
+
+	<bean id="myBean2" class="com.startcaft.spring.beans.HelloWorld">
+		<property name="name" value="Spring"></property>
+	</bean>
+	
+	<!-- 
+		通过构造方法来配置 Bean 的属性:
+		函数重载的两个要素：参数个数以及参数类型
+		<constructor-arg>元素中有 value 属性表示参数值，也可以使用<value>子节点
+		<constructor-arg>元素中有 index 属性可以确定参数的位置。
+		<constructor-arg>元素中有 type 属性可以指定参数的类型。
+		index 和 type 可以混合一起使用
+	-->
+	<bean id="car" class="com.startcaft.spring.beans.Car">
+	    <constructor-arg value="Audi" index="0"></constructor-arg>
+	    <constructor-arg value="ShangHai" index="1"></constructor-arg>
+	    <constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<bean id="car2" class="com.startcaft.spring.beans.Car">
+	    <constructor-arg value="BWM" type="java.lang.String"></constructor-arg>
+	    <!-- 如果字面值包含特殊字符，可以使用<![CDATA[]]> 包裹起来 -->
+	    <constructor-arg type="java.lang.String">
+	        <value><![CDATA[<^ShangHai^>]]></value>
+	    </constructor-arg>
+	    <constructor-arg type="int">
+	        <value>280</value>
+	    </constructor-arg>
+	</bean>
+	
+	<!-- 
+		配置Bean之间的关系:
+		使用<property>元素的 ref 属性建立 Bean 之间的引用关系
+	-->
+	<bean id="person" class="com.startcaft.spring.beans.Person">
+	    <property name="name" value="Tom"></property>
+	    <property name="age" value="24"></property>
+	    <!-- <property name="car" ref="car2"></property> -->
+	    <!--
+	    <property name="car">
+	        <ref bean="car2"/>
+	    </property>
+	    -->
+	    <property name="car">
+	        <!-- 内部Bean，不能被外部引用，所以就算设置id属性也无济于事 -->
+	        <bean class="com.startcaft.spring.beans.Car">
+	            <constructor-arg value="Ford"></constructor-arg>
+	            <constructor-arg value="ChangAn"></constructor-arg>
+	            <constructor-arg value="200000.00" type="double"></constructor-arg>
+	        </bean>
+	    </property>
+	</bean>
+	
+	<!-- null值以及级联属性配置 -->
+	<bean id="person2" class="com.startcaft.spring.beans.Person">
+	    <constructor-arg value="Jerry"></constructor-arg>
+	    <constructor-arg value="25"></constructor-arg>
+	    <!--  
+	    <constructor-arg ref="car"></constructor-arg>
+	    -->
+	    <!-- 测试赋值 null -->
+	    <!-- 
+	    <constructor-arg><null/></constructor-arg>
+	    -->
+	    <!-- 测试级联赋值，必须为相关的bean先赋值，才能使用级联赋值为bean的属性赋值 ,Struts2可以直接复制。【不重要，基本不会用】-->
+	    <constructor-arg ref="car"></constructor-arg>
+	    <property name="car.maxSpeed" value="300"></property>
+	</bean>
+	
+	<!-- 
+		配置集合属性 
+	-->
+	<bean id="person3" class="com.startcaft.spring.beans.collection.Person">
+	    <property name="name" value="Mike"></property>
+	    <property name="age" value="27"></property>
+	    <property name="cars">
+	        <!-- 使用<list>节点 为java.lang.List类型的属性赋值 -->
+	        <list>
+	            <ref bean="car"/>
+	            <!--  
+	            <ref bean="car2"/>
+	            -->
+	            <!-- 使用内部Bean -->
+	            <bean class="com.startcaft.spring.beans.Car">
+	                <constructor-arg value="Honda"></constructor-arg>
+	            	<constructor-arg value="GuangDong"></constructor-arg>
+	            	<constructor-arg value="150000.00" type="double"></constructor-arg>
+	            </bean>
+	        </list>
+	    </property>
+	</bean>
+	
+	<!-- 配置Map集合 -->
+	<bean id="newPerson" class="com.startcaft.spring.beans.collection.NewPerson">
+	    <property name="name" value="Mike"></property>
+	    <property name="age" value="27"></property>
+	    <property name="cars">
+	        <!-- 使用 map 节点及map 的 entry 子节点来配置java.util.Map类型的成员变量 -->
+	        <map>
+	            <entry key="AA" value-ref="car"></entry>
+	            <entry key="BB" value-ref="car2"></entry>
+	        </map>
+	    </property>
+	</bean>
+	
+	<!-- 配置Properties对象 -->
+	<bean id="datasource" class="com.startcaft.spring.beans.collection.DataSource">
+	    <property name="properties">
+	        <!-- 使用 props 节点以及props 的 prop 子节点来配置java.util.Properties类型的成员变量 -->
+	        <props>
+	            <prop key="user">sa</prop>
+	            <prop key="password">5904395</prop>
+	            <prop key="jdbcUrl">jdbc:sqlserver://127.0.0.1:1433;databaseName=Hibernate4</prop>
+	            <prop key="driverClass">com.microsoft.sqlserver.jdbc.SQLServerDriver</prop>
+	        </props>
+	    </property>
+	</bean>
+	
+	<!-- 配置独立的集合 bean，以供多个 bean 进行引用,需要导入Srping的util 命名空间 -->
+	<util:list id="cars">
+	    <ref bean="car"/>
+	    <ref bean="car2"/>
+	</util:list>
+	
+	<bean id="person4" class="com.startcaft.spring.beans.collection.Person">
+	    <property name="name" value="Mike"></property>
+	    <property name="age" value="27"></property>
+	    <property name="cars" ref="cars"></property>
+	</bean>
+	
+	<!-- 通过 p 命名空间为 Bean 的属性赋值，需要先导入 p 命名空间，相对于传统的配置方式，更加简洁 -->
+	<bean id="person5" class="com.startcaft.spring.beans.collection.Person" 
+	    p:age="30" 
+	    p:name="Queen"
+	    p:cars-ref="cars">
+	</bean>
+
+</beans>
