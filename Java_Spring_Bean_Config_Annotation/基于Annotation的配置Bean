@@ -1,0 +1,61 @@
+1).在classpath中扫描组件
+	--->【组件扫描(component scanning)】：Spring能够从classpath下自动扫描，侦测和实例化所有具有特定注解的组件；
+	--->特定组件包括：
+		1，@Component：基本注解，标识了一个受Spring管理的组件；
+		2，@Repository：标识持久层组件；
+		3，@Service：标识业务层(服务层)组件；
+		4，@Controller：标识表现层组件；
+	--->对于扫描到的组件，【Spring有默认的命名策略】；使用非限定类名，第一个字母小写，也可以在注解中通过value属性标识组件的名称；
+	
+	*Spring中的注册并不能识别某一个类是否是某一个层次组件(也就是说Controller组件我也可以为业务层的类做注解)，开发中最好按照Spring的规定来
+	
+	--->当在组件类上使用了特定的注解之后，还需要在Spring配置文件中声明<context:component_scan>：
+		1，【base-package】属性指定一个需要扫描的基类包，Spring容器将会扫描这个基类包里及其子包中的所有类；
+		2，【当需要扫描多个包时，可以使用逗号分隔】；
+		3，如果仅希望扫描特定的类而非基包下的所有类时，可以使用【resource-pattern】属性过滤特定的类，如：
+			<context:component-scan
+				base-package="com.startcaft.spring.beas"
+				resource-pattern="autowire/*.class">
+			</context:component-scan>
+		4，【<contex:include-filter>子节点表示要包含的目标类】；
+		5，【<context:exclude-filter>子节点表示要排除在外的目标类】；
+		6，<context:component-scan>下可以拥有若干个<contex:include-filter>和<context:exclude-filter>子节点
+
+		【<contex:include-filter>和<context:exclude-filter>子节点支持多种类型的过滤表达式】：
+		---------------------------------------------------------------------------------------------------------------------------------
+					类型			|					示例					|							说明
+		---------------------------------------------------------------------------------------------------------------------------------
+				【annotation】	|		com.startcaft.XxxAnnotation		|	【所有标注了XxxAnnotation的类】，该类型采用目标类型是否标注了某个注解进行过滤。						
+		---------------------------------------------------------------------------------------------------------------------------------
+				【assinable】	|		com.startcaft.XxxService		|	【所有继承或扩展XxxService的类】，该类型采用目标类型是否继承或扩展某个注解进行过滤。						
+		---------------------------------------------------------------------------------------------------------------------------------
+				aspectj			|		com.startcaft.*Service+			|	所有类名以Service结束的类及继承或扩展它们的类，该类型采用AspejctJ表达式进行过滤。						
+		---------------------------------------------------------------------------------------------------------------------------------
+				regex			|		com.\startcaft\.anno\..*		|	所有com.startcaft.anno包下的类，该类型采用正则表达式或根据类的类名进行过滤。						
+		---------------------------------------------------------------------------------------------------------------------------------
+				custom			|		com.startcaft.XxxTypeFilter		|	采用XxxTypeFilter通过代码的方式定义过滤规则，该类必须实现org.springframework.core.type.TypeFilter接口						
+		---------------------------------------------------------------------------------------------------------------------------------
+		
+
+
+2).基于Annotation的组件装配
+	---><context-component-scan>元素会自动注册AutowiredAnnotationBeanPostProcessor实例，
+		该实例可以自动装配具有【@Autowired】和@Resource，@Inject注解的属性。
+	
+	使用@Autowired注解自动装配bean:
+		--->@Autowired注解自动装备具有兼容类型的单个bean属性：
+			1，【构造器，普通字段(即非public字段)，一切具有参数的方法都可以应用@Autowired注解】；
+			2，默认情况下，所有@Autowired注解的属性都需要被设置，当Spring找不到匹配的bean装配属性时，会抛出异常。
+				【若一个属性允许不被设置，可以设置@Autowired注解的required属性为false】；
+			3，默认情况下，当IOC容器中存在多个类型兼容的bean时，通过类型的自动装配将无法工作，此时可以在@Qualifer注解里提供bean的名称，
+				【Spring允许对方法的参数标注@Qualifier以指定注入bean的名称】；
+			4，@Autowired注解也可以应用在【数组类型】的属性上，此时Spring将会把所有匹配的Bean进行自动装配；
+			5，@Autowired注解也可以应用在【集合属性】上，此时Spring读取该积累的类型信息，然后自动装配所有与之兼容的bean；
+			6，@Autowired注解在【java.util.Map】上时，若该Map的键的值为String，那么Spring将自动装配与Map值类型兼容的bean，此时bean的名称作为键的值；
+			
+	
+	使用@Resource或@Inject自动装配bean：
+		--->Spring还支持@Resource和 @Inject注解，这两个注解和@Autowired注解的功能了类似；
+		--->【@Resource注解要求提供一个Bean名称的属性，若该属性为空，则自动采用标注处的变量或方法名作为bean的名称】；
+		--->【@Inject和@Autowired注解一样也是按照类型来匹配注入的bean，但是没有required属性】；
+		--->【建议使用@Autowired注解】；
