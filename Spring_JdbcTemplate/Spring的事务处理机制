@@ -1,0 +1,94 @@
+1，Spring的管理的事务可以分为如下两类：
+	--->逻辑事务：在Spring中定义的事务通常指逻辑事务，提供比物理事务更抽象，更方便的事务配置管理，
+		但是也基于物理事务；
+	--->物理事务：特定于数据库的事务；
+
+
+2，Spring中支持以下两种事务声明方式：
+	--->编程式事务：当系统需要明确的，【细粒度的控制各个事务的边界】，应该选择编程式事务；
+	--->声明式事务：当系统对于事务的控制粒度较粗时，应该选择声明式事务；
+	
+	无论选择上述哪种事务方式去实现事务控制，Spring都提供了基于门面设计模式的事务管理器提供选择，
+	如下是Spring事务中支持的事务管理器
+	------------------------------------------------------------------------------
+			事务管理器实现(org.spring.framework.*)			|		使用时机		
+	------------------------------------------------------------------------------
+		jdbc.datasource.DataSourceTransactionManager	|	使用jdbc的抽象以及ibatis支持							
+	------------------------------------------------------------------------------
+		orm.hibernate.HibernateTransactionManager		|	使用hibernate支持(默认3.0以下版本)					
+	------------------------------------------------------------------------------
+		orm.hibernate3.HibernateTransactionManager		|	使用hibernate3支持						
+	------------------------------------------------------------------------------
+		transaction.jta.JtaTransactionManager			|	使用分布式事务（分布式数据库支持）					
+	------------------------------------------------------------------------------
+		orm.jpa.JpaTransactionManager					|	使用jpa做为持久化工具			
+	------------------------------------------------------------------------------
+		orm.toplink.TopLinkTransactionManager			|	使用TopLink持久化工具					
+	------------------------------------------------------------------------------
+		orm.jdo.JdoTransactionManager					|	使用Jdo持久化工具			
+	------------------------------------------------------------------------------
+		jms.connection.JmsTransactionManager			|	使用JMS 1.1+					
+	------------------------------------------------------------------------------
+		jms.connection.JmsTransactionManager102			|	使用JMS 1.0.2						
+	------------------------------------------------------------------------------
+		transaction.jta.OC4JJtaTransactionManager		|	使用oracle的OC4J JEE容器						
+	------------------------------------------------------------------------------
+		transaction.jta.WebLogicJtaTransactionManager	|	在weblogic中使用分布式数据库							
+	------------------------------------------------------------------------------
+		jca.cci.connection.CciLocalTransactionManager	|	使用jrping对J2EE Connector Architecture (JCA)和Common Client Interface (CCI)的支持							
+	------------------------------------------------------------------------------
+	
+	--->各种事务管理定义如下：
+		1，JdbcTransactionManager定义如下：
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+          <property name="dataSource" ref="dataSource"/>  
+		</bean> 
+		
+		2，Hibernate事务管理器配置如下：
+		<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+    		<property name="sessionFactory" ref="sessionFactory"/>
+		</bean>  
+		Hibernate的事务管理器会注入一个SessionFactory对象，然后将事务处理委托给当前的Transaction对象，事务提交时，调用commit()，
+		事务回滚时，调用rollback()方法；
+		
+		3，jpa事务管理器配置如下：
+		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+			<property name="entityManagerFactory" ref="entityManagerFactory"/>  
+		</bean> 
+
+
+3，声明式事务的配置
+	--->【Spring特有的事务传播行为】，Spring支持7种事务传播行为，确定当前事务方法与被调用的事务方法的边界
+		【通俗点将，A方法是一个事务方法，A方法中又调用B方法，B方法也是也事务方法，那么B的事务怎么弄？是新开始一个开始直接用A的事务?】
+		---------------------------------------------------------------------------------------
+		 				传播行为								|				含义
+		---------------------------------------------------------------------------------------
+		 【PROPAGATION_REQUIRED（XML文件中为REQUIRED)】			|	A方法和B方法都使用A方法的事务			
+		---------------------------------------------------------------------------------------
+		 【PROPAGATION_REQUIRES_NEW(XML文件中为REQUIRES_NEW）】	|	B方法开启自己的事务，A的事务挂起			
+		---------------------------------------------------------------------------------------
+		 PROPAGATION_MANDATORY(XML文件中为MANDATORY）			|				
+		---------------------------------------------------------------------------------------
+		 PROPAGATION_NESTED(XML文件中为NESTED)					|				
+		---------------------------------------------------------------------------------------
+		 PROPAGATION_NEVER（XML文件中为NEVER)					|				
+		---------------------------------------------------------------------------------------
+		 PROPAGATION_SUPPORTS(XML文件中为SUPPORTS）				|				
+		---------------------------------------------------------------------------------------
+		 PROPAGATION_NOT_SUPPORTED（XML文件中为NOT_SUPPORTED）     |				
+		---------------------------------------------------------------------------------------
+	
+	--->事务隔离级别：
+	
+	--->Spring事务只读属性：
+		 Spring事务只读的含义是指---如果后台数据库发现当前事务为只读事务(select操作)，那么就会进行一些列的优化措施。
+		 它是在后台数据库进行实施的。【个人感觉然并卵】。
+		 
+	--->Spring事务的超时： 
+		有的时候为了系统中关键部分的性能问题，它的事务执行时间应该尽可能的段。因此可以给这些事务设置超时时间，【以秒为单位】。
+		因为事务的开始都会发生数据库的表或者被数据库优化为行锁，如果允许时间过长，那么这些数据都会一直锁定，影响系统的性能。
+		【如果事务执行的时间超过设置的超时时间，那么事务直接被回滚】。
+	
+	--->Spring的回滚机制：
+		1，Spring中可以指定当方法执行并抛出异常的时候，哪些异常回滚事务，哪些异常不回滚事务；
+		2，默认情况下，方法在排除RuntimeException异常时候才回滚。
