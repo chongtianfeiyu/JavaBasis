@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+    <bean id="address" class="com.startcaft.spring.SpEL.Address">
+        <!-- 使用spel 为一个bean 的属性 赋一个字面值 -->
+        <property name="city" value="#{'BeiJing'}"></property>
+        <property name="street" value="WuDaoKou"></property>
+    </bean>
+    
+    <bean id="car" class="com.startcaft.spring.SpEL.Car">
+        <property name="brand" value="Audi"></property>
+        <property name="price" value="500000.00"></property>
+        <!-- 使用spel 调用一个静态属性 并 计算后 为 bean的属性赋值 -->
+        <property name="tyrePerimeter" value="#{T(java.lang.Math).PI * 80}"></property>
+    </bean>
+    
+    <bean id="person" class="com.startcaft.spring.SpEL.Person">
+        <property name="name" value="张三"></property>
+        <!-- 使用spel 来引用其他的bean -->
+        <property name="car" value="#{car}"></property>
+        <!-- 使用spel 来引用其他的bean的属性 -->
+        <property name="city" value="#{address.city}"></property>
+        <!-- 在SpEL 中使用运算符 -->
+        <property name="info" value="#{car.price > 300000 ? '金领' : '白领'}"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="car" class="com.startcaft.spring.cycle.Car" 
+        init-method="init"
+        destroy-method="destory">
+        <property name="brand" value="Audi"></property>
+    </bean>
+    
+    <!-- 
+    	配置 Bean 的后置处理器：不需要配置id，IOC 容器自动识别是一个BeanPostProcessor
+    	实现BeanPostProcessor接口，并实现其中的两个方法。
+    	1,postProcessAfterInitialization(Object bean, String beanName)，init-method之前被调用
+    	2,postProcessBeforeInitialization(Object bean, String beanName)，init-method之后被调用
+    	
+    	bean参数： bean的实例
+    	beanName参数：IOC 容器配置的 bean 的名称
+    	返回值：是实际上返回给用户的那个bean。注意：可以在以上两个方法中修改返回的bean，甚至是返回一个全新的bean。
+     -->
+    <bean class="com.startcaft.spring.cycle.MyBeanPostProcessor"></bean>
+	
+</beans>
