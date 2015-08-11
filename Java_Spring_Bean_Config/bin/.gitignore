@@ -1,11 +1,1 @@
-/applicationContext.xml
-/beans-autowire.xml
-/beans-cycle.xml
-/beans-factory.xml
-/beans-factorybean.xml
-/beans-properties.xml
-/beans-relation.xml
-/beans-scope.xml
-/beans-spel.xml
 /com/
-/db.properties
