@@ -1,0 +1,30 @@
+1，Spring整合Hibernate，整合什么？
+	--->让Spring IOC容器管理Hibernate的SessionFactory对象；
+	--->让Hibernate使用 上 Spring的声明式事务；
+	
+2，整合步骤？
+	--->加入Hibernate jar包；
+	--->添加Hibernate的配置文件：hibernate.cfg.xml，【只配置Hibernate 的基本属性：① 方言；② SQL显示及格式化；③ 生成数据表的策略以及二级缓存 】；
+	--->编写对应的持久化类，并添加对应的.hbm.xml文件；
+	
+	--->加入Spring jar包；
+	--->添加Spring 配置文件
+	
+3，Spring整合Hibernate后，整个事务的流程：
+	--->在事务方法开始之前：
+		1，获取Session对象；
+		2，把Session对象和当前线程绑定，这样就可以在Dao层中使用SessionFactory实例的getCurrentSession方法来获取Session对象了；
+		3，开启事务
+		
+	--->若方法正常结束(即没有异常出现)，则：
+		1，提交事务；
+		2，使和当前线程绑定的Session 解除绑定；
+		3，关闭Session；
+		
+	--->若方法出现异常，则：
+		1，回滚事务；
+		2，使和当前线程绑定的Session 解除绑定；
+		3，关闭Session；
+
+
+4，也可以不使用Hibernate的配置文件，而使用Spring中的HibernateProperties属性来配置Hibernate 原生的属性。【减少系统中配置文件的数量，Java总是被人诟病说配置多】
