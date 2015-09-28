@@ -11,6 +11,7 @@ public class TestConstructor {
 	/**
 	 * 使用反射构造运行时类的对象
 	 */
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testFeflectConstructor() throws Exception{
 		
@@ -24,6 +25,7 @@ public class TestConstructor {
 		System.out.println(p);
 	}	
 	
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void test2() throws ClassNotFoundException{
 		String className = "com.startcaft.reflect.Person";
