@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+body{ margin:0; padding:0; border:0; background:#e5edff; font-size:14px; font-family:"宋体"; min-width:667px;}
+img{ border:0;}
+ul li{ list-style-type:none;}
+.clear{ clear:both;}
+.clearfix:after { content:"."; clear:both; height:0; visibility:hidden; display:block;}
+.clearfix{ *zoom:1; clear:both;}
+a{ color:#333; text-decoration:none;}
+a:hover{ color:#900; text-decoration:none;}
+/*初始化代码*/
+
+#main{ width:100%; margin:0 auto; height:auto;}
+.top{ width:100%; height:25px; background:url(../images/mainDIVtopCenter.gif) repeat-x top; height:25px; line-height:25px; text-align:center; letter-spacing:3px; color:#103a7c;}
+.content{ width:98%; margin:10px auto 0; height:auto; min-height:430px; background:#FFF; padding-top:10px; font-size:12px;}
+.content .contentNew{ width:99%; margin:0 auto; height:auto; min-height:420px; border:1px #cde1f1 solid;}
+.content .contentNew .con_1{ width:100%; border-bottom:1px #cde1f1 solid;}
+.content .contentNew .con_1 .con_1_l{ width:14.8%; float:left; height:200px; line-height:200px; text-align:right;}
+.content .contentNew .con_1 .con_1_r{ width:85%; float:right; height:200px; border-left:1px #cde1f1 solid;}
+.content .contentNew .con_1 .con_1_r form>textarea{ width:30%; height:130px; margin-left:3px;}
+.content .contentNew .con_1 .con_1_r form>input{ height:60px; margin-left:3px;}
+.content .contentNew .con_2{ width:100%; border-bottom:1px #cde1f1 solid;}
+.content .contentNew .con_2 .con_2_l{ width:14.8%; float:left; height:32px; line-height:32px; text-align:right;}
+.content .contentNew .con_2 .con_2_r{ width:85%; float:right; height:32px; border-left:1px #cde1f1 solid;}
+.content .contentNew .con_2 .con_2_r>select{ line-height:15px; margin:6px 0 0 3px;}
+.content .contentNew .con_3{ width:100%; border-bottom:1px #cde1f1 solid;}
+.content .contentNew .con_3 .con_3_l{ width:14.8%; float:left; height:32px; line-height:32px; text-align:right;}
+.content .contentNew .con_3 .con_3_r{ width:85%; float:right; height:32px; border-left:1px #cde1f1 solid;}
+.content .contentNew .con_3 .con_3_r>input{ width:11%; line-height:15px; margin:6px 0 0 3px;}
+.content .contentNew .con_4{ width:100%; border-bottom:1px #cde1f1 solid;}
+.content .contentNew .con_4 .con_4_l{ width:14.8%; float:left; height:120px; line-height:120px; text-align:right;}
+.content .contentNew .con_4 .con_4_r{ width:85%; float:right; height:120px; border-left:1px #cde1f1 solid;}
+.content .contentNew .con_4 .con_4_r>textarea{ width:30%; height:110px; margin-left:3px;}
+.content .contentNew .con_5{ width:180px; margin:0 auto;}
+.content .contentNew .con_5>input{ margin:4px 0 0 5px;}
+.footer{ width:100%; height:8px; background:url(../images/mainDIVbottomCenter.gif) repeat-x top; height:8px;}

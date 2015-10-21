@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startcaft.ssm.mapper.DepartmentCustomMapper">
+	
+    
+	<resultMap type="com.startcaft.ssm.po.extension.DepartmentCustom"
+		id="depart_result">
+		<id property="id" column="id" />
+		<result property="departDesc" column="depart_desc" />
+		<result property="isEnable" column="is_enable" />
+		<result property="applicationId" column="application_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="departName" column="depart_name" />
+	</resultMap>
+	<!-- 查询子节点，parent_id=0就是根节点 
+	<select id="getChildDepartByParent" parameterType="int"
+		resultMap="depart_result">
+		SELECT * FROM tb_department WHERE is_enable = TRUE AND parent_id = #{value}
+	</select>
+	-->
+
+	<!-- 查询某应用程序下的顶级部门的个数 -->
+	<select id="findTopDepartCount" parameterType="int" resultType="int">
+		select count(*) from tb_department where parent_id = 0 and
+		application_id = #{value};
+	</select>
+	
+	<!-- 根据应用程序获取下面的所有部门 -->
+	<select id="findDepartListByApp" parameterType="int" resultMap="depart_result" >
+	    SELECT * FROM tb_department WHERE application_id = #{value}
+	</select>
+	
+	
+
+</mapper>

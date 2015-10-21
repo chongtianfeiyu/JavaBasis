@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.startcaft.ssm.mapper.ApplicationCustomMapper">
+	
+    <sql id="query_application_list">
+        <if test="applicationCustom != null">
+            <if test="applicationCustom.appName != null  and applicationCustom.appName != ''">
+                and a.app_name = #{applicationCustom.appName}
+            </if>
+            <if test="applicationCustom.appCode != null  and applicationCustom.appCode != ''">
+                and a.app_code = #{applicationCustom.appCode}
+            </if>
+        </if>
+    </sql>
+    
+	<select id="findApplicationList" parameterType="com.startcaft.ssm.po.extension.ApplicationQueryVo"
+		resultType="com.startcaft.ssm.po.extension.ApplicationCustom">
+	    SELECT a.* FROM tb_application a
+	    <where>
+	        <include refid="query_application_list"></include>
+	    </where>
+	</select>
+	
+	<select id="findApplicationListCount" parameterType="com.startcaft.ssm.po.extension.ApplicationQueryVo"
+		resultType="int">
+	    SELECT count(*) FROM tb_application a
+	    <where>
+	        <include refid="query_application_list"></include>
+	    </where>
+	</select>
+
+</mapper>
