@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>SpringMvc_001_HelloWorld</display-name>
+	
+	<!-- 配置DispatcherServlet -->
+	<servlet>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置DispatcherServlet 的一个初始化参数：用于指定SpringMVC项目配置文件的名称和位置 -->
+		<!-- 
+			实际上也可以不通过该初始化参数来指定SpringMVC的配置文件，而使用默认的。
+			默认的配置文件名为： /WEB-INF/<servlet-name>-servlet.xml
+			这里的默认名为springDispatcherServlet-servlet.xml
+		 -->
+		<!--  
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		-->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 配置org.springframework.web.filter.HiddenHttpMethodFilter -->
+	<!-- 可以把POST请求 转换为 DELETE,或 PUT请求 -->
+	<filter>
+	    <filter-name>HiddenHttpMethodFilter</filter-name>
+	    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>HiddenHttpMethodFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
