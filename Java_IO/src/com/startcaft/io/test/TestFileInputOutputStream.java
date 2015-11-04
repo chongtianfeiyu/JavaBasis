@@ -14,11 +14,19 @@ import org.junit.Test;
  * 按照【流的角色】的不同分为：节点流(直接作用于文件的)，处理流
  * 
  * 2.IO的体系
- * 抽象基类						节点流(文件流)
- * InputStream					FileInputStream
- * OutputStream					FileOutputStream
- * Reader						FileReader
- * Writer						FileWriter
+ * 抽象基类							节点流(文件流)						缓冲流(处理流的一种)		
+ * InputStream(字节流)				FileInputStream					BufferedInputStream
+ * OutputStream(字节流)				FileOutputStream				BufferedOutputStream
+ * 	
+ * Reader(字符流)						FileReader						BufferedReader
+ * Writer(字符流)						FileWriter						BufferedWriter
+ * 
+ * 3，字符流和字节流的主要区别：
+ * 字节流读取的时，读到一个字节就返回一个字节；而字符流使用了字节流读取一个或多个字节时，
+ * 		先去查指定的编码表，将查到的字符返回；
+ * 
+ * 字节流可以处理所有类型数据，如：图片，MP3,AVI等文件，而字符流只能处理字符数据。
+ * 		主要是处理纯文本数据，就要优先考虑是使用字符流；	
  */
 public class TestFileInputOutputStream {
 	
