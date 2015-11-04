@@ -1,0 +1,45 @@
+基于Java的Web应用，其标准的打包方式是WAR，WAR与JAR类似
+只不过WAR可以包含更多的内容，如JSP文件，Serlvet，Java类，web.xml配置文件，依赖JAR包，静态web资源(如HTML,CSS,JavaScript文件)等。
+
+一个典型的WAR文件会有如下目录结构：
+-war/
+  + META-INF/
+  + WEB-INF/
+  |  + classes/
+  |    + ServletA.class
+  |    + db.properties
+  |    + ...
+  |
+  |
+  |
+  |  + lib/
+  |    + dom4j-1.4.1.ar
+  |    + ...
+  |
+  |
+  |  + web.xml
+  |
+  |
+  |
+  + img/
+  |
+  + css/
+  |
+  + js/
+  |
+  + index.html
+  + sample.jsp
+
+
+Maven对Web项目的布局结构也有一个通用的约定，不过首先需要为Web项目显示指定打包方式为war。
+<project>
+  <groupId>...</groupId>
+  <atrifactId>...</atrifactId>
+  <packageing>war</packageing>
+</project>
+
+Web项目的类以及资源文件同一般JAR项目一样，默认位置都是src/mani/java，src/main/resources，
+测试类以及测试资源文件的默认位置是src/test/java，src/test/resources。
+
+Web项目比较特殊的地方在于：它还有一个Web资源目录，其默认位置是src/main/webapp，
+在此目录下，必须包含一个子目录WEB-INF,WEB-INF目录还必须包含web.xml文件。
