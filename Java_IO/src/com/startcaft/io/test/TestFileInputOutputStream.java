@@ -14,7 +14,7 @@ import org.junit.Test;
  * 按照【流的角色】的不同分为：节点流(直接作用于文件的)，处理流
  * 
  * 2.IO的体系
- * 抽象基类							节点流(文件流)						缓冲流(处理流的一种)		
+ * 抽象基类							节点流(文件流)						缓冲流(处理流的一种)【使用缓冲流可以提升文件操作的效率】		
  * InputStream(字节流)				FileInputStream					BufferedInputStream
  * OutputStream(字节流)				FileOutputStream				BufferedOutputStream
  * 	

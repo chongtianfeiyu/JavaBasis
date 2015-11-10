@@ -1,0 +1,45 @@
+����Java��WebӦ�ã����׼�Ĵ����ʽ��WAR��WAR��JAR����
+ֻ����WAR���԰�����������ݣ���JSP�ļ���Serlvet��Java�࣬web.xml�����ļ�������JAR������̬web��Դ(��HTML,CSS,JavaScript�ļ�)�ȡ�
+
+һ�����͵�WAR�ļ���������Ŀ¼�ṹ��
+-war/
+  + META-INF/
+  + WEB-INF/
+  |  + classes/
+  |    + ServletA.class
+  |    + db.properties
+  |    + ...
+  |
+  |
+  |
+  |  + lib/
+  |    + dom4j-1.4.1.ar
+  |    + ...
+  |
+  |
+  |  + web.xml
+  |
+  |
+  |
+  + img/
+  |
+  + css/
+  |
+  + js/
+  |
+  + index.html
+  + sample.jsp
+
+
+Maven��Web��Ŀ�Ĳ��ֽṹҲ��һ��ͨ�õ�Լ��������������ҪΪWeb��Ŀ��ʾָ�������ʽΪwar��
+<project>
+  <groupId>...</groupId>
+  <atrifactId>...</atrifactId>
+  <packageing>war</packageing>
+</project>
+
+Web��Ŀ�����Լ���Դ�ļ�ͬһ��JAR��Ŀһ����Ĭ��λ�ö���src/mani/java��src/main/resources��
+�������Լ�������Դ�ļ���Ĭ��λ����src/test/java��src/test/resources��
+
+Web��Ŀ�Ƚ�����ĵط����ڣ�������һ��Web��ԴĿ¼����Ĭ��λ����src/main/webapp��
+�ڴ�Ŀ¼�£��������һ����Ŀ¼WEB-INF,WEB-INFĿ¼���������web.xml�ļ���
